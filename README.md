@@ -9,3 +9,14 @@ I successfully sent a prompt and received a generated response.
 - Python
 - Google Colab
 - DeepSeek API
+
+## Skills demonstrated:
+- Python basics
+- API integration
+- Prompt engineering
+- Using Google Colab
+
+## Next steps:
+- Build something useful
+- Fine-tune a model
+- Add a user interface
