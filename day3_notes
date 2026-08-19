@@ -1,0 +1,58 @@
+# Day 3 Progress: DocuBot (RAG App)
+
+## What I built:
+A Retrieval-Augmented Generation (RAG) app that lets users upload a PDF or text file and ask questions about it. The AI answers based only on the document and remembers context for follow-up questions.
+
+## Live Demo:
+https://docubot-420yolomcswaggerpants.streamlit.app
+
+## GitHub Repository:
+https://github.com/420yolomcswaggerpants/docubot
+
+---
+
+## Features:
+- Upload PDF or .txt files
+- Extract text from PDFs using pypdf
+- Ask questions about the document
+- AI answers strictly from the document
+- Refuses to answer if info not present
+- Remembers conversation context (follow-up questions)
+- Clean chat interface with user and assistant icons
+- Document preview in collapsible expander
+
+---
+
+## Tech Stack:
+- Python
+- Streamlit
+- DeepSeek API
+- pypdf
+- Git & GitHub
+- Streamlit Cloud
+
+---
+
+## Skills Demonstrated:
+- RAG architecture
+- File upload handling
+- Session state management
+- Prompt engineering
+- API integration
+- Deployment
+
+---
+
+## Errors Hit and Fixed:
+- KeyError: DEEPSEEK_API_KEY not found (fixed by recreating .streamlit folder)
+- IndentationError (fixed by properly indenting code blocks)
+- NameError: user_question not defined (fixed by adding st.chat_input)
+- UI rendering issues (fixed by moving history display after input processing)
+
+---
+
+## Next Steps:
+- Add chunking for long documents
+- Support multiple file uploads
+- Add document summarization
+- Add export/chat history download
