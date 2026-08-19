@@ -1,7 +1,12 @@
-# Day 3 Progress: DocuBot (RAG App)
+# Day 3 Progress: DocuBot, RAG, and the Pivot to Real AI
 
-## What I built:
-A Retrieval-Augmented Generation (RAG) app that lets users upload a PDF or text file and ask questions about it. The AI answers based only on the document and remembers context for follow-up questions.
+## What I built today:
+- Completed DocuBot: a RAG app that lets users upload a PDF or text file and ask questions about it
+- The AI answers based only on the document and remembers context for follow-up questions
+- Added chunking, name-aware search, and document summarization
+- Fixed multiple bugs including duplicate chat display, indentation errors, and retrieval failures
+- Discovered the limits of naive RAG and moved to full-document inference for accuracy
+- Deployed DocuBot to the public internet
 
 ## Live Demo:
 https://docubot-420yolomcswaggerpants.streamlit.app
@@ -40,6 +45,8 @@ https://github.com/420yolomcswaggerpants/docubot
 - Prompt engineering
 - API integration
 - Deployment
+- Debugging Streamlit apps
+- Product thinking: UX, QA, iteration
 
 ---
 
@@ -47,12 +54,39 @@ https://github.com/420yolomcswaggerpants/docubot
 - KeyError: DEEPSEEK_API_KEY not found (fixed by recreating .streamlit folder)
 - IndentationError (fixed by properly indenting code blocks)
 - NameError: user_question not defined (fixed by adding st.chat_input)
+- NameError: relevant_chunks not defined (fixed by removing debug lines)
 - UI rendering issues (fixed by moving history display after input processing)
+- GitHub push protection blocking secrets (fixed with .gitignore)
+- RAG retrieval failures on long documents (fixed by sending full document to AI)
 
 ---
 
-## Next Steps:
-- Add chunking for long documents
-- Support multiple file uploads
-- Add document summarization
-- Add export/chat history download
+## Key Realizations:
+
+### 1. Building apps that call APIs is not "AI Engineering"
+I built three apps that use DeepSeek's API. That's valuable, but it's plumbing. It's not training models. It's not understanding how AI works under the hood.
+
+### 2. RAG is harder than it looks
+Simple word-matching retrieval fails on real documents. For a full novel, chunking by keywords doesn't find the right answer. Real systems use semantic search (embeddings), not Ctrl+F.
+
+### 3. The resume needs more than apps
+Apps are portfolio pieces. But to stand out, I need to show I can fine-tune a model, not just call one.
+
+---
+
+## What's Next:
+- Fine-tune DeepSeek 1.3B on a custom dataset
+- Learn PyTorch basics
+- Use LoRA for efficient training on my 7900 XT
+- Build one real training project to prove AI engineering skills
+
+---
+
+## Skills Still Missing (The Real AI Work):
+- Training models
+- Fine-tuning
+- PyTorch
+- LoRA
+- Evaluation metrics
+- Loss curves
+- Model deployment
