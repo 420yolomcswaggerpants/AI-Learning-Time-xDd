@@ -59,7 +59,6 @@ https://github.com/420yolomcswaggerpants/docubot
 - Product thinking: UX, QA, iteration
 - Training environment setup
 - Data collection strategy
-- Hardware assessment for local training
 
 ---
 
@@ -69,7 +68,6 @@ https://github.com/420yolomcswaggerpants/docubot
 - NameError: user_question not defined (fixed by adding st.chat_input)
 - NameError: relevant_chunks not defined (fixed by removing debug lines)
 - UI rendering issues (fixed by moving history display after input processing)
-- GitHub push protection blocking secrets (fixed with .gitignore)
 - RAG retrieval failures on long documents (fixed by sending full document to AI)
 - PyTorch ROCm install failure (resolved by using standard PyTorch build)
 
@@ -89,8 +87,8 @@ Apps are portfolio pieces. But to stand out, I need to show I can fine-tune a mo
 ### 4. Data quality is everything
 For fine-tuning, clean data matters more than volume. Pre-curated data sources reduce noise. Manual filtering is a separate skill to learn later.
 
-### 5. Hardware constraints shape the project
-A 7900 XT can fine-tune small models (1-3B) in minutes. CPU training takes hours but works. I chose to stay on Python 3.14 with standard PyTorch for now.
+### 5. Python version compatibility matters
+Python 3.14 is too new for some ML libraries. GPU-accelerated PyTorch requires Python 3.12 or earlier for ROCm support. Standard PyTorch works on newer Python but runs on CPU. This tradeoff between compatibility and performance is a real consideration in AI development.
 
 ---
 
