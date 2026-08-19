@@ -7,6 +7,12 @@
 - Fixed multiple bugs including duplicate chat display, indentation errors, and retrieval failures
 - Discovered the limits of naive RAG and moved to full-document inference for accuracy
 - Deployed DocuBot to the public internet
+- Made the strategic decision to move from API-based apps to actual model training
+- Researched fine-tuning approaches and data requirements
+- Identified a domain-specific text generation task for first fine-tuning project
+- Set up training environment (PyTorch, Transformers, PEFT, Whisper)
+- Created project structure for training pipeline
+- Began data collection for fine-tuning dataset
 
 ## Live Demo:
 https://docubot-420yolomcswaggerpants.streamlit.app
@@ -35,6 +41,10 @@ https://github.com/420yolomcswaggerpants/docubot
 - pypdf
 - Git & GitHub
 - Streamlit Cloud
+- PyTorch
+- Hugging Face Transformers
+- PEFT (LoRA)
+- Whisper
 
 ---
 
@@ -47,6 +57,9 @@ https://github.com/420yolomcswaggerpants/docubot
 - Deployment
 - Debugging Streamlit apps
 - Product thinking: UX, QA, iteration
+- Training environment setup
+- Data collection strategy
+- Hardware assessment for local training
 
 ---
 
@@ -58,6 +71,7 @@ https://github.com/420yolomcswaggerpants/docubot
 - UI rendering issues (fixed by moving history display after input processing)
 - GitHub push protection blocking secrets (fixed with .gitignore)
 - RAG retrieval failures on long documents (fixed by sending full document to AI)
+- PyTorch ROCm install failure (resolved by using standard PyTorch build)
 
 ---
 
@@ -72,13 +86,20 @@ Simple word-matching retrieval fails on real documents. For a full novel, chunki
 ### 3. The resume needs more than apps
 Apps are portfolio pieces. But to stand out, I need to show I can fine-tune a model, not just call one.
 
+### 4. Data quality is everything
+For fine-tuning, clean data matters more than volume. Pre-curated data sources reduce noise. Manual filtering is a separate skill to learn later.
+
+### 5. Hardware constraints shape the project
+A 7900 XT can fine-tune small models (1-3B) in minutes. CPU training takes hours but works. I chose to stay on Python 3.14 with standard PyTorch for now.
+
 ---
 
 ## What's Next:
-- Fine-tune DeepSeek 1.3B on a custom dataset
-- Learn PyTorch basics
-- Use LoRA for efficient training on my 7900 XT
-- Build one real training project to prove AI engineering skills
+- Finish data collection
+- Format dataset for training
+- Write training script using LoRA
+- Run first fine-tune
+- Evaluate before/after model behavior
 
 ---
 
@@ -90,3 +111,5 @@ Apps are portfolio pieces. But to stand out, I need to show I can fine-tune a mo
 - Evaluation metrics
 - Loss curves
 - Model deployment
+- Dataset formatting
+- Manual data filtering
