@@ -12,7 +12,7 @@
 
 ## Live Demos:
 - Email Generator: https://ai-email-generator-420yolomcswaggerpants.streamlit.app
-- Support Agent: https://420yolomcswaggerpants-support-agent.streamlit.app
+- Support Agent: https://support-agent-420yolomcswaggerpants.streamlit.app
 
 ## GitHub Repositories:
 - Email Generator: https://github.com/420yolomcswaggerpants/ai-email-generator
