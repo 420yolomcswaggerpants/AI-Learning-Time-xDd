@@ -14,7 +14,7 @@
 - Successfully deployed the fine-tuned model to the public internet
 
 ## Live Demo:
-[YOUR_STREAMLIT_URL]
+https://nimbus-finetune-420yolomcswaggerpants.streamlit.app
 
 ## HuggingFace Models:
 - 3B: https://huggingface.co/420yolomcswaggerpants/nimbus-coffee-assistant
