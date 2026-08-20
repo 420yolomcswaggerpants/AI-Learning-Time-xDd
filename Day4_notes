@@ -1,0 +1,76 @@
+# Day 4 Progress: First Fine-Tuned Model
+
+## What I did today:
+- Pivoted from API-based apps to actual model training
+- Set up a complete fine-tuning pipeline
+- Created a domain-specific dataset of 80 Q&A pairs
+- Fine-tuned Qwen 2.5 0.5B, 1.5B, and 3B models using LoRA
+- Compared model performance across sizes
+- Improved accuracy by adding more data and increasing epochs
+- Deployed the final fine-tuned model to HuggingFace
+- Built a Streamlit app to serve the fine-tuned model
+- Deployed the app to the public internet
+
+## What I learned:
+- Fine-tuning is fundamentally different from prompt engineering
+- Loss curves show learning progress
+- Bigger models learn better from the same data
+- More data improves accuracy
+- More epochs help with domain-specific memorization
+- LoRA trains a small subset of parameters efficiently
+- HuggingFace is the standard place to host fine-tuned models
+
+## Results:
+
+### Model: Qwen 2.5 0.5B (20 examples, 5 epochs)
+- Loss: 10.93 → 1.32
+- Answers were vague and generic
+
+### Model: Qwen 2.5 1.5B (50 examples, 15 epochs)
+- Loss: 3.06 → 0.24
+- Answers were on-topic but slightly inaccurate
+
+### Model: Qwen 2.5 3B (80 examples, 25 epochs)
+- Loss: 4.14 → 0.04
+- Answers matched training data exactly
+
+## Final Model:
+- Model: Qwen 2.5 3B with LoRA
+- Dataset: 80 Q&A pairs
+- Training time: ~2 hours on CPU
+- Accuracy: Exact matches on test questions
+- Hosted on HuggingFace
+- Deployed via Streamlit
+
+## Tech Stack:
+- Python
+- PyTorch
+- Transformers
+- PEFT (LoRA)
+- HuggingFace Hub
+- Streamlit
+- Git & GitHub
+
+## Key Realizations:
+
+### 1. Training is iterative
+I ran three training sessions. Each one taught me something. The first was a proof of concept. The second showed improvement. The third nailed it.
+
+### 2. Data quality matters most
+The biggest accuracy jump came from adding more specific Q&A pairs, not from model size alone.
+
+### 3. Loss curves tell the story
+Watching loss go down from 4.14 to 0.04 was proof the model was actually learning.
+
+### 4. HuggingFace is essential
+Hosting the model on HuggingFace makes it accessible anywhere. That's the standard workflow.
+
+### 5. CPU training is viable for small models
+The 3B model trained in about 2 hours on CPU. Not fast, but completely doable for learning and proof of concept.
+
+## Next Steps:
+- Write READMEs for all projects
+- Go deeper on RAG (semantic search, embeddings)
+- Learn evaluation metrics
+- Add more training data
+- Try full fine-tuning vs LoRA
