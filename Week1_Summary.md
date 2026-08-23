@@ -1,7 +1,7 @@
 # Week 1 Summary: Zero to AI Engineer Portfolio
 
 ## Overview
-Five days ago, I couldn't write a line of Python. Today, I have 5 deployed AI applications, 2 fine-tuned models on HuggingFace, and a complete portfolio that demonstrates real AI engineering skills.
+Six days ago, I couldn't write a line of Python. Today, I have 6 deployed AI applications, 2 fine-tuned models on HuggingFace, and a complete portfolio that demonstrates real AI engineering skills—including retrieval evaluation with documented tradeoffs.
 
 ## What Was Built
 
@@ -28,9 +28,17 @@ Five days ago, I couldn't write a line of Python. Today, I have 5 deployed AI ap
 
 ### Day 5: Semantic RAG
 - Built proper RAG with embeddings
-- Implemented semantic search
+- Implemented semantic search with dot product
 - Added document summarization
 - 90% accuracy on advanced inference questions
+
+### Day 6: Hybrid Search RAG
+- Built hybrid RAG combining semantic + keyword search
+- Implemented cosine similarity (upgrade from dot product)
+- Implemented BM25 keyword search
+- Implemented reciprocal rank fusion
+- Evaluated 3 systems on 10 inference questions
+- Documented coverage vs quality tradeoff
 
 ## Portfolio At a Glance
 
@@ -41,6 +49,7 @@ Five days ago, I couldn't write a line of Python. Today, I have 5 deployed AI ap
 | DocuBot | Basic RAG | Live |
 | Nimbus Fine-Tune | Trained model | Live |
 | Semantic DocuBot | Real RAG | Live |
+| Hybrid RAG | Hybrid search RAG | Live |
 
 ## Skills Acquired
 
@@ -48,6 +57,7 @@ Five days ago, I couldn't write a line of Python. Today, I have 5 deployed AI ap
 - Python
 - Git & GitHub
 - Command line
+- Virtual environments (concept)
 
 ### AI Development
 - API integration
@@ -57,6 +67,10 @@ Five days ago, I couldn't write a line of Python. Today, I have 5 deployed AI ap
 - Embeddings
 - Fine-tuning (LoRA)
 - Training pipelines
+- Cosine similarity
+- BM25 keyword search
+- Reciprocal rank fusion
+- Retrieval evaluation
 
 ### Deployment
 - Streamlit Cloud
@@ -78,18 +92,29 @@ Five days ago, I couldn't write a line of Python. Today, I have 5 deployed AI ap
 
 6. **Embeddings capture meaning.** Semantic search found relevant info even without keyword matches.
 
+7. **Cosine similarity beats dot product.** Normalizing vectors removes magnitude bias and measures meaning more accurately.
+
+8. **Hybrid search is a tradeoff.** Combining semantic + keyword gives deeper answers but may miss abstract questions. Coverage vs quality is a fundamental design decision.
+
+9. **Rank fusion beats score fusion.** Reciprocal rank fusion is robust to differences in score distributions between search methods.
+
+10. **Evaluation must be systematic.** Testing the same questions across multiple systems reveals strengths and weaknesses you'd miss with casual testing.
+
 ## What This Proves
 
 - Can build and deploy AI applications
 - Can fine-tune open-source models
 - Can implement semantic RAG systems
+- Can implement hybrid search systems
+- Can evaluate and compare retrieval strategies
 - Can debug real-world errors
 - Can document work professionally
 - Can learn fast and execute
 
 ## Next Week
 
-- Hybrid search (semantic + keyword)
-- Better evaluation metrics
+- Formal evaluation metrics (precision, recall, nDCG)
+- Full fine-tuning (not just LoRA)
 - Deeper RAG optimizations
-- Resume and job application prep
+- Interview prep and concept explanation practice
+- Resume building
