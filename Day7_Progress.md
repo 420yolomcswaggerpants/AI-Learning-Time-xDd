@@ -89,7 +89,6 @@
 - Gradient descent explanation
 - Cosine similarity explanation
 - Resume details (fill in real info)
-- More evaluation questions (4 is small sample)
 
 ## Projects Now (8 total)
 
@@ -108,4 +107,3 @@
 - Resume completion
 - Interview prep
 - More evaluation questions
-- Larger dataset if revisiting full fine-tuning
