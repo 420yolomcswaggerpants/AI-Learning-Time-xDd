@@ -9,10 +9,16 @@
 - No concept is interview-ready yet — all require more study
 - Plan: write all 12 in physical notebook, review daily
 
+### Physical Notebook Study
+- Wrote 12 core concepts in physical notebook
+- Core concepts: RAG, embeddings, fine-tuning, overfitting, gradient descent, cosine similarity, hybrid search, RRF, BM25, vector normalization, coverage vs quality, evaluation
+- 10 supporting concepts listed but not yet written in notebook
+- Supporting concepts: tokenization, attention, context window, hallucination, temperature, base vs fine-tuned, system vs user roles, zero-shot vs few-shot, quantization, instruction vs domain tuning
+
 ### Honest Assessment
-- Yesterday I struggled with gradient descent and cosine similarity
-- Today I still need work on ALL concepts — not just those two
-- Progress is happening but slower than the notes suggested
+- Yesterday struggled with gradient descent and cosine similarity
+- Today still need work on ALL concepts — not just those two
+- Progress is happening but slower than earlier notes suggested
 - Need more repetitions before any concept is automatic
 
 ### Code Practice Session 3: To-Do List App
@@ -26,22 +32,28 @@
 - Session 2 (yesterday): Counter app — needed hints for session state and st.write
 - Session 3 (today): To-do list — no code shown, only prompts for what to write next
 
+### Resume Drafted
+- Created full resume with all 8 projects
+- Included live URLs for every project
+- Concrete metrics and findings for each project
+- Placeholder for name and email (fill in later)
+- Education section will evolve over time
+
 ## What I Still Need To Work On
 
 - ALL 12 core concepts — none are interview-ready yet
+- Write 10 supporting concepts in notebook
 - Code from scratch without prompts
 - Empty string bug in to-do list
-- Writing concepts in physical notebook
-- 10 supporting concepts
-- Resume details (deferred)
+- Resume details (name, email, LinkedIn)
 
-## Next Steps
+## Next Project Identified
 
-- Write 12 core concepts in notebook (physical writing)
-- Fix empty string bug in to-do list
-- Add clear button to to-do list
-- More code practice
-- Daily concept review until automatic
+### Reranking RAG (Project 9)
+- Two-stage retrieval: semantic search finds 20 candidates, cross-encoder reranks to top 10
+- Uses cross-encoder/ms-marco-MiniLM-L-6-v2 for reranking
+- Addresses precision weakness found in evaluation (0.125)
+- Will build later today or tomorrow
 
 ## Projects Now (8 total)
 
@@ -53,3 +65,11 @@
 6. Hybrid RAG (cosine similarity + BM25 + RRF)
 7. RAG Evaluation Harness (precision, recall, nDCG)
 8. Nimbus Full Fine-Tune (comparison study)
+
+## Next Steps
+
+- Write 10 supporting concepts in notebook
+- Fix empty string bug in to-do list
+- Build Reranking RAG project
+- Daily concept review until automatic
+- Resume details when ready
