@@ -1,4 +1,4 @@
-# Day 9 Progress: Reranking RAG + Honest Evaluation
+# Day 9 Progress: Reranking RAG + Query Expansion + Code Practice
 
 ## What I Did Today
 
@@ -10,48 +10,89 @@
 - Deployed to Streamlit Cloud and GitHub
 
 ### Key Finding: Reranking Did NOT Improve Performance
-Tested on Fahrenheit 451 with 10 inference questions.
-
 | System | Answered |
 |--------|----------|
 | Semantic RAG | 9/10 |
 | Hybrid RAG (RRF) | 7/10 + 1 partial |
 | Reranking RAG | 5/10 + 1 partial |
 
-### Why Reranking Failed
-1. First-stage recall was the bottleneck — right chunks weren't in top 20 candidates
-2. Cross-encoder trained on short passages, not 500-char chunks
-3. Reranking can only improve ranking quality, not recall
-4. If semantic search misses the right chunk, reranking can't recover it
+### Project 10: Query Expansion RAG
+- Built query expansion system using DeepSeek to generate alternative search queries
+- Runs semantic search for original + 3 expanded queries
+- Combines unique candidate chunks
+- Deployed to Streamlit Cloud and GitHub
+
+### Query Expansion Results
+| System | Answered |
+|--------|----------|
+| Semantic RAG | 9/10 |
+| Hybrid RAG (RRF) | 7/10 + 1 partial |
+| Reranking RAG | 5/10 + 1 partial |
+| Query Expansion RAG | 6/10 |
+
+### Full System Comparison (10 questions)
+
+| Question | Semantic | Hybrid RRF | Reranking | Query Expansion |
+|----------|----------|------------|-----------|-----------------|
+| Q1 Hound symbolism | Yes | No | No | No |
+| Q2 Mildred TV | Yes | Yes | Partial | Yes |
+| Q3 Faber vs Montag | Yes | Yes | Yes | Yes |
+| Q4 Fire symbolism | Yes | No | No | No |
+| Q5 Fear of books | Yes | Yes | Yes | Yes |
+| Q6 Nature role | Yes | Yes | Yes | No |
+| Q7 Clarisse impact | Yes | Yes | Yes | Yes |
+| Q8 River symbolism | No | No | No | No |
+| Q9 Hopeful ending | Yes | Yes | Yes | Yes |
+| Q10 Author on tech | Yes | Yes | No | Yes |
+
+### Major Finding: Simple Beats Complex
+Semantic RAG (the simplest system) outperformed all more complex systems:
+- Hybrid RAG (BM25 + RRF): worse
+- Reranking RAG (cross-encoder): worse
+- Query Expansion RAG (multi-query): worse
+
+More complexity doesn't always mean better results.
+
+### Why Complex Systems Failed
+1. Symbolism questions (Q1, Q4, Q8) defeat all retrieval methods
+2. Q8 fails across all systems — suggests chunking problem, not retrieval
+3. Added complexity introduced noise without solving core weakness
+4. Semantic search with dot product was already well-suited to this document
 
 ### Retrieval Variance Observation
-- Noticed retrieved chunks differ between runs on the same question
+- Same question can retrieve different chunks on different runs
 - Live Streamlit app found an answer to Q1 that local testing missed
-- Causes: embedding model randomness, cross-encoder score variance, Streamlit reruns
-- Implication: single-run evaluation is not reliable
-- For fair comparison, need multiple runs averaged or fixed seeds
+- Single-run evaluation is not reliable
+
+### Code Practice Session 4: To-Do List (Fixed)
+- Built to-do list with empty string check and Clear All button
+- Used loop for bulleted display
+- Wrote with only 2 prompts (vs many prompts yesterday)
+- Added comments to code for notebook review
+- Progress: needed help with almost every line → needed help with 2 things
 
 ### Code Writing Progress
-- Wrote app.py with errors
-- Fixed: st.cache_resource decorator, base_url formatting, deepseek_chat vs deepseek-chat, typos
+- Wrote query expansion app.py with multiple errors
+- Fixed: typos (endcode vs encode), missing underscores, wrong variable names
 - Learning through typing and fixing errors
-- Still needed help with errors but understood fixes
+- Catching errors faster each time
 
 ### Resume
-- Drafted with 8 projects and live URLs
-- Will update with Project 9
+- Updated with 9 projects and live URLs
+- Will add Project 10
 
 ## What I Learned
 
 1. Reranking is not a silver bullet
-2. First-stage retrieval quality determines reranking effectiveness
-3. Negative results are still results — document them honestly
-4. Cross-encoder model choice matters (short passages vs long chunks)
-5. Retrieval has variance — same question can produce different chunks on different runs
-6. Single-run evaluation is not sufficient for reliable conclusions
-7. Typing code from scratch produces errors, but that's how learning happens
+2. Query expansion helps when vocabulary mismatch exists but hurts when original query already works
+3. Simple approaches can beat complex ones
+4. First-stage retrieval quality determines everything
+5. Chunking strategy may be the real bottleneck for symbolism questions
+6. Retrieval has variance — single-run evaluation is not reliable
+7. Negative results are still results — document them honestly
+8. Code writing improves with daily practice
 
-## Projects Now (9 total)
+## Projects Now (10 total)
 
 1. Email Generator (API wrapper)
 2. Support Agent (API wrapper with RAG)
@@ -62,11 +103,12 @@ Tested on Fahrenheit 451 with 10 inference questions.
 7. RAG Evaluation Harness (precision, recall, nDCG)
 8. Nimbus Full Fine-Tune (comparison study)
 9. Reranking RAG (two-stage retrieval)
+10. Query Expansion RAG (multi-query retrieval)
 
 ## Next Steps
 
-- Consider query expansion RAG (Project 10) to solve recall problem
+- Consider chunking strategy investigation (why Q8 fails everywhere)
 - Continue concept study (12 core + 10 supporting)
-- Code practice session 4 (fix empty string bug in to-do list)
-- Update resume with Project 9
+- Code practice session 5
+- Update resume with Project 10
 - Consider multi-run evaluation for more reliable results
