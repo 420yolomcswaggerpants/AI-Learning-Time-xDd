@@ -1,4 +1,4 @@
-# Day 11 Progress: Concept Quiz + Expanded Notes
+# Day 11 Progress: Concept Quiz + Expanded Notes + Model Evaluation
 
 ## What I Did Today
 
@@ -57,13 +57,35 @@ Added detailed notes under each concept with deeper context:
 ### New Concept Added
 - **TF-IDF** (supporting): term frequency × inverse document frequency, no saturation or length control, BM25 fixes both
 
+### Project 14: Model Evaluation
+- Built evaluation framework for comparing fine-tuned models
+- Created held-out test set (5 questions not in training data)
+- Scored answers using token overlap against ground truth
+- Results: Full FT (0.493) outperformed LoRA (0.310)
+- Documented hallucination patterns and repetition failure
+- Pushed to GitHub
+
+### Model Evaluation Results
+
+| Model | Average Score |
+|-------|---------------|
+| LoRA 0.5B | 0.310 |
+| Full Fine-Tune 0.5B | 0.493 |
+
+### Key Findings
+1. Full FT outperformed LoRA on this test
+2. Both models hallucinate on unseen questions
+3. Full FT had repetition failure on wifi password
+4. LoRA hallucinated brand names on popular drink
+5. Token overlap is crude—measures word overlap not correctness
+
 ## Updated Concept Counts
 
 - Core concepts: 26
 - Supporting concepts: 16 (added TF-IDF)
 - Total: 42
 
-## Projects Now (13 total)
+## Projects Now (14 total)
 
 1. Email Generator (API wrapper)
 2. Support Agent (API wrapper with RAG)
@@ -78,11 +100,11 @@ Added detailed notes under each concept with deeper context:
 11. Own Training Loop (PyTorch from scratch)
 12. Attention From Scratch (NumPy)
 13. Tiny Transformer (full architecture in NumPy)
+14. Model Evaluation (held-out test set, token overlap)
 
 ## Next Steps
 
-- Code practice session 5
-- Model evaluation (perplexity, task accuracy)
 - FastAPI deployment
+- Code practice session 5
 - Continue daily concept repetition
-- Review expanded notes periodically
+- Consider LLM-as-judge for model evaluation
