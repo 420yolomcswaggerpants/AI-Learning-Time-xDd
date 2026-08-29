@@ -1,4 +1,4 @@
-# Day 11 Progress: Concept Quiz + Expanded Notes + Model Evaluation
+# Day 11 Progress: Concept Quiz + Expanded Notes + Model Evaluation + GPU Training
 
 ## What I Did Today
 
@@ -61,23 +61,32 @@ Added detailed notes under each concept with deeper context:
 - Built evaluation framework for comparing fine-tuned models
 - Created held-out test set (5 questions not in training data)
 - Scored answers using token overlap against ground truth
-- Results: Full FT (0.493) outperformed LoRA (0.310)
-- Documented hallucination patterns and repetition failure
+- Tested 3 models: LoRA 0.5B, Full FT 0.5B, LoRA 3B (GPU)
 - Pushed to GitHub
 
 ### Model Evaluation Results
 
 | Model | Average Score |
 |-------|---------------|
-| LoRA 0.5B | 0.310 |
-| Full Fine-Tune 0.5B | 0.493 |
+| Full FT 0.5B (CPU) | 0.493 |
+| LoRA 3B (GPU, 4-bit) | 0.429 |
+| LoRA 0.5B (CPU) | 0.310 |
 
-### Key Findings
-1. Full FT outperformed LoRA on this test
-2. Both models hallucinate on unseen questions
-3. Full FT had repetition failure on wifi password
-4. LoRA hallucinated brand names on popular drink
-5. Token overlap is crude—measures word overlap not correctness
+### Google Colab GPU Training (First Time)
+- Set up Google Colab with T4 GPU
+- Learned: Python 3.14 has no ROCm support for 7900 XT, so Colab is temporary GPU path
+- First attempt: 3B model OOM on T4
+- Fix: 4-bit quantization (BitsAndBytesConfig) + LoRA adapters
+- Second attempt: loss 3.02 → 2.85 (barely learned, learning rate too low)
+- Fix: learning rate 5e-5 → 2e-4 (LoRA standard)
+- Third attempt: loss 2.76 → 0.94 (successful)
+- Model uploaded to HuggingFace: nimbus-gpu-3b-lora
+
+### Key Findings from GPU Training
+1. Quantized LoRA on 3B did NOT beat full fine-tune on 0.5B
+2. Learning rate matters—2e-4 for LoRA, 5e-5 for full FT
+3. Bigger model + quantization ≠ better results
+4. Training method matters as much as model size
 
 ## Updated Concept Counts
 
@@ -102,9 +111,21 @@ Added detailed notes under each concept with deeper context:
 13. Tiny Transformer (full architecture in NumPy)
 14. Model Evaluation (held-out test set, token overlap)
 
+## Models on HuggingFace (4 total)
+
+1. nimbus-coffee-assistant (3B LoRA, CPU)
+2. nimbus-coffee-assistant-0.5b (0.5B LoRA, CPU)
+3. nimbus-full-finetune-0.5b (0.5B Full FT, CPU)
+4. nimbus-gpu-3b-lora (3B LoRA on 4-bit, GPU)
+
 ## Next Steps
 
 - FastAPI deployment
 - Code practice session 5
 - Continue daily concept repetition
 - Consider LLM-as-judge for model evaluation
+- Real dataset project (bigger than 80 synthetic Q&As)
+
+## Key Milestone
+
+First GPU training completed. Set up Colab, handled OOM errors, implemented 4-bit quantization, tuned learning rate, and deployed a GPU-trained model to HuggingFace.
