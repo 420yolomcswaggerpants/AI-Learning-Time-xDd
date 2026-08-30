@@ -2,6 +2,10 @@
 
 ## What I Did Today
 
+### Concept Quiz (Separate Chat)
+- Quizzed on 42 concepts + new Day 12 additions
+- New concepts added: BitsAndBytesConfig, learning rate differences, FastAPI, REST endpoints, Pydantic validation, GPU memory constraints
+
 ### Project 14: Model Evaluation
 - Built evaluation framework for comparing fine-tuned models
 - Created held-out test set (5 questions not in training data)
@@ -40,6 +44,7 @@
 - GET /health endpoint for monitoring
 - Automatic API documentation at /docs
 - Pydantic validation for request/response
+- Added requirements.txt to all recent projects
 - Pushed to GitHub
 
 ### FastAPI vs Streamlit
@@ -75,7 +80,7 @@
 
 ## Next Steps
 
-- Real dataset project (bigger than 80 synthetic Q&As)
+- Real dataset project (SQuAD RAG planned for tomorrow)
 - Read "Attention Is All You Need" deeply
 - Continue daily concept quiz
 - Code practice session 5
@@ -87,3 +92,4 @@
 2. First production API built (FastAPI)
 3. First multi-model evaluation completed
 4. Learned that bigger model + quantization ≠ better results
+5. All projects now have proper requirements.txt
