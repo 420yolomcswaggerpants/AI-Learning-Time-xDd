@@ -1,4 +1,4 @@
-# Day 15 Progress: MNIST + Transformer Training + Honest Self-Assessment
+# Day 15 Progress: MNIST + Transformer Training + RLHF (Fixed) + Honest Self-Assessment
 
 ## What I Did Today
 
@@ -70,14 +70,47 @@
 | 60 | 0.998 |
 | 90 | 0.638 |
 
+### Project 21: RLHF Simulation (Built and Fixed)
+- First attempt: REINFORCE with shaped reward → stuck in local optimum (always "hlllllllll")
+- Root cause: random policy never found "hello"; shaped reward led to exploiting partial credit
+- Fix: added supervised pretraining on 500 "hello" demonstrations, then RL fine-tuning with binary reward and entropy bonus
+- Final result: policy reliably generates "hello" anywhere in sequence (reward 1.0)
+- Pushed to GitHub
+
+### RLHF Training Results (Final)
+
+**Supervised Pretraining Loss:**
+| Epoch | Loss |
+|-------|------|
+| 0 | 1.7935 |
+| 50 | 0.9014 |
+| 90 | 0.8418 |
+
+**RL Fine-tuning:** reward consistently 1.0 with text like:
+- `'xkokrhello'`
+- `'bphellohvs'`
+- `'lortuhello'`
+- `'webchellor'`
+
+### New Concepts Added to Rotation from RLHF
+- RLHF (Reinforcement Learning from Human Feedback)
+- Policy Gradient
+- REINFORCE algorithm
+- Reward Shaping
+- Exploration vs Exploitation
+- Local Optimum
+- Supervised Pretraining Before RL
+- Entropy Bonus
+- RLHF Workflow (Supervised Fine-Tuning → RL)
+
 ### Honest Self-Assessment Discussion
 - Compared myself honestly against college grads and bootcamp grads
 - Acknowledged: not job-ready yet
 - Gaps identified: math depth, algorithms/data structures, team experience, production experience
-- Strengths: 20 projects in 15 days, real AI/ML skills, exceptional learning speed
-- Path forward: finish remaining builds, then study hard and interview prep
+- Strengths: 21 projects in 15 days, real AI/ML skills, exceptional learning speed
+- Path forward: finish builds, then study hard and interview prep
 
-## Projects Now (20 total)
+## Projects Now (21 total)
 
 1. Email Generator (API wrapper)
 2. Support Agent (API wrapper with RAG)
@@ -99,22 +132,24 @@
 18. Deep Neural Network From Scratch (ReLU, He init, 100% spiral)
 19. MNIST Classifier From Scratch (95.31% test accuracy)
 20. Transformer Training (PyTorch, 408K params)
+21. RLHF Simulation (REINFORCE + supervised pretraining)
 
 ## Next Steps
 
-- Project 21: RLHF / Reward Models
 - Read "Attention Is All You Need" deeply
 - Algorithms and data structures study
 - Mock interviews and interview prep
 - Portfolio polish
+- Update quiz handoff with RLHF + supervised pretraining concepts
 
 ## Key Milestones
 
-1. 20 projects in 15 days
+1. 21 projects in 15 days
 2. 95.31% MNIST accuracy from scratch
 3. First transformer trained with PyTorch
-4. Honest assessment: not job-ready yet, but path is clear
-5. Shift from building to studying begins after RLHF
+4. First RLHF simulation built and fixed
+5. Honest assessment: not job-ready yet, but path is clear
+6. Shift from building to studying begins now
 
 ## Honest Gaps (from self-assessment)
 
