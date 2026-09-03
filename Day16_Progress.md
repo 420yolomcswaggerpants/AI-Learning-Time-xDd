@@ -1,4 +1,4 @@
-# Day 16 Progress: Concept Review + Capstone Blueprint (Complete)
+# Day 16 Progress: Concept Review + Capstone Blueprint (Final, Corrected)
 
 ## What I Did Today
 
@@ -25,83 +25,90 @@
 - RLHF Workflow (Supervised Fine-Tuning → RL)
 
 ### Capstone Planning: Nimbus AI Support Platform
-- Decided on a generalist capstone that integrates all major skills
-- Full blueprint created covering SFT, RAG, distillation, RLHF, evaluation, deployment, and security
-- Commitment to include blue teaming / security hardening as a full module
-- Model strategy: 0.5B for live demo (Streamlit), 3B LoRA for scale (HuggingFace)
+- Committed to generalist capstone integrating all major skills
+- Built final corrected blueprint with true distillation, DPO, data engineering, evaluation, security, engineering, and deployment
+- Acknowledged earlier mistakes: text-generation was mislabeled as distillation; now fixed with true KL divergence distillation
+- Added DPO (Direct Preference Optimization) for practical RLHF
+- Added data engineering, data splits, testing, fallbacks, experiment tracking, reproducibility
 
 ## Capstone Blueprint: Nimbus AI Support Platform
 
-### Phase 1: Data & SFT (Supervised Fine-Tuning)
-- Generate 5,000 synthetic Q&A pairs via DeepSeek
-- Format instruction/response
-- Fine-tune 0.5B full (local CPU or Colab)
-- Fine-tune 3B LoRA (Colab T4, save to HuggingFace)
-- Save both models
+### Phase 1: Data Engineering & Preparation
+- Generate 5,000 Q&A pairs via DeepSeek API
+- Clean: remove duplicates, strip whitespace, validate JSON, filter malformed entries
+- Split datasets:
+  - SFT Set: 4,000 pairs (labeled)
+  - Distillation Set: 1,000 prompts (unlabeled)
+  - DPO/Reward Set: 500 preference pairs (chosen vs rejected)
+  - Test Set: 200 held-out pairs (never used in training)
 
-### Phase 2: RAG System
-- Hybrid search (semantic + BM25 + RRF)
+### Phase 2: Supervised Fine-Tuning (SFT)
+- Model 1: Fine-tune 0.5B full on local CPU
+- Model 2: Fine-tune 3B LoRA on Colab T4
+- Log hyperparameters, loss curves, save artifacts
+
+### Phase 3: RAG System
+- Hybrid search: semantic embeddings + BM25
+- Reciprocal Rank Fusion (RRF) implemented from scratch
 - Cross-encoder reranking
-- Integrate with fine-tuned models
+- Fallback if retrieval score below threshold
 
-### Phase 3: Distillation
-- DeepSeek API as teacher
-- Train student 0.5B on teacher outputs (text distillation)
-- Compare student vs SFT-only vs teacher
+### Phase 4: True Knowledge Distillation
+- Teacher: 3B SFT model (local)
+- Student: 0.5B SFT model
+- Process:
+  1. Teacher generates logits on the 1,000 Distillation Set prompts
+  2. Apply temperature scaling to teacher softmax
+  3. Train student with KL Divergence Loss to match teacher probability distribution
+- Result: 0.5B student learns teacher's confidence and behavior
 
-### Phase 4: RLHF / Policy Gradient / REINFORCE
-- Build reward model (classifier or rule-based)
-- Train small LSTM policy with REINFORCE + entropy bonus
-- Demonstrate full RLHF loop (SFT → reward → RL)
-- Optionally apply policy gradient to 0.5B SFT model
+### Phase 5: RLHF & Reward Training
+- Reward Model: Train classifier to score responses
+- Algorithm A (Mechanics Demo): REINFORCE on small LSTM policy (already built in Project 21)
+- Algorithm B (Production): Apply DPO to 0.5B model using 500 preference pairs
+- DPO is stable, no separate reward model needed during training
 
-### Phase 5: Evaluation Suite
-- Retrieval metrics: precision, recall, nDCG
-- Answer quality: LLM-as-judge
-- A/B comparisons: SFT vs Distilled vs RLHF-tuned vs RAG-only
-- Report findings
+### Phase 6: Evaluation Suite
+- Retrieval: Precision@k, Recall@k, nDCG
+- Answer Quality: LLM-as-Judge (DeepSeek API)
+- A/B Testing: SFT vs Distilled vs DPO vs RAG
+- Produce comprehensive ranking report
 
-### Phase 6: Security Hardening (Full Blue Team Module)
-- Input validation & sanitization
-- Prompt injection defenses (instruction hierarchy, delimiter patterns)
-- Output filtering (PII, harmful content, confidence threshold)
-- Rate limiting (token bucket per IP)
-- Audit logging
-- Secrets management & rotation
-- Threat model document (attack matrix)
+### Phase 7: Security Hardening (Blue Team)
+- Threat model: prompt injection, PII leakage, denial of service
+- Input validation: sanitize, limit length, block control characters
+- Prompt injection defense: instruction hierarchy, delimiter patterns, input tagging
+- Output filtering: PII regex, harmful content checks
+- Rate limiting: token bucket per IP
+- Audit logging: queries, model versions
 - Adversarial prompt test suite
 
-### Phase 7: Deployment & Integration
-- FastAPI backend with security middleware
-- Streamlit frontend
-- Live demo: 0.5B + RAG on Streamlit Cloud (free)
-- 3B model on HuggingFace with run instructions
-- Model versioning
+### Phase 8: Deployment & Engineering
+- Backend: FastAPI with security middleware, graceful fallbacks
+- Frontend: Streamlit chat interface
+- Reproducibility: Dockerfile, pinned requirements, setup README
+- Live demo: 0.5B distilled model + RAG on free hosting
+- Documentation: architecture diagram, design tradeoffs, security considerations
 
-### Phase 8: Documentation
-- Architecture diagram
-- Design decisions and tradeoffs
-- Security considerations
-- Evaluation results
-- Lessons learned
+## Verification Against Requirements
 
-## Verification Against User Requirements
-
-| Requested Component | Included? |
-|---------------------|-----------|
-| SFT | Yes, Phase 1 |
-| Distillation | Yes, Phase 3 |
-| RLHF | Yes, Phase 4 |
-| Reward training | Yes, Phase 4 |
-| REINFORCE algorithm | Yes, Phase 4 |
-| Policy gradient | Yes, Phase 4 |
-| RAG | Yes, Phase 2 |
-| Evaluation | Yes, Phase 5 |
-| Deployment | Yes, Phase 7 |
-| Blue teaming / security | Yes, Phase 6 |
-| From-scratch component | Partial: we may implement custom training loop or RRF, but could add explicit from-scratch module if needed |
-
-**Note:** The capstone currently uses PyTorch/HuggingFace for training, which is production-appropriate. A from-scratch component is not strictly required for a generalist capstone, but if we want to include it, we can add a custom RRF implementation or a small custom evaluation metric. Let me know if you want to add that.
+| Component | Included? |
+|-----------|-----------|
+| SFT | Yes, Phase 2 |
+| True Distillation (KL divergence) | Yes, Phase 4 |
+| RLHF | Yes, Phase 5 |
+| Reward training | Yes, Phase 5 |
+| REINFORCE algorithm | Yes, Phase 5 |
+| Policy gradient | Yes, Phase 5 (as part of REINFORCE) |
+| RAG | Yes, Phase 3 |
+| Evaluation | Yes, Phase 6 |
+| Deployment | Yes, Phase 8 |
+| Security / Blue team | Yes, Phase 7 |
+| Data engineering | Yes, Phase 1 |
+| Testing | Yes, Phase 7 + Phase 6 |
+| Fallbacks | Yes, Phase 3 + Phase 8 |
+| Experiment tracking | Yes, Phase 2 |
+| Reproducibility | Yes, Phase 8 |
 
 ## Projects Now (21 completed + 1 capstone in progress)
 
@@ -129,14 +136,15 @@
 
 ## Next Steps
 
-- Start Capstone Phase 1: Data Generation
-- Run generate-data.py with 5,000 pairs
-- Prepare Colab notebook for 3B LoRA training
+- Execute Phase 1: Data Generation & Cleaning
+- Create folder structure
+- Run generate-data.py for 5,000 pairs
+- Clean and split data
 - Continue daily concept quiz
 
 ## Key Milestones
 
 1. 21 projects in 16 days
-2. Capstone blueprint finalized with all requested components
-3. Security hardening included as full module
-4. Clear phased plan for next several days
+2. Final capstone blueprint corrected and verified
+3. True distillation and DPO added
+4. Security, data engineering, testing, fallbacks, reproducibility all included
