@@ -12,7 +12,7 @@
 - Cleaned, deduplicated, validated
 - Final splits:
   - SFT: 4,000 pairs -> sft_train.jsonl
-  - Distillation prompts: 1,000 -> distill_prompts.jsonl
+  - Distillation prompts (reserved for later, NOT used yet): 1,000 -> distill_prompts.jsonl
   - Test: 200 -> test_set.jsonl
 - DPO preference pairs will be generated in Phase 5
 
@@ -30,6 +30,7 @@
 - Complete 3B LoRA training on Colab
 - Download/upload 3B model to HuggingFace
 - Proceed to Phase 3: RAG system
+- Phase 4 will be TRUE distillation using teacher logits + KL divergence (not yet done)
 
 ## Projects (21 completed + capstone in progress)
 1. Email Generator
@@ -58,3 +59,4 @@
 - Data pipeline built: generate, merge, clean, split
 - 5,333 unique pairs secured
 - Two model training paths initiated
+- True distillation planned for Phase 4, not yet started
