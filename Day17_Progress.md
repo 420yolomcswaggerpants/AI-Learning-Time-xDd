@@ -1,10 +1,9 @@
-# Day 17 Progress: Capstone Phase 1 Complete + Concept Review While Training
+# Day 17 Progress: Capstone Execution Begins
 
 ## What I Did Today
 
 ### Concept Quiz (Separate Chat, Ongoing)
-- Quizzing on all concepts while training
-- Covering both core and supporting terms
+- Quizzing on all concepts while training and building
 - Routine repetition, no labels
 
 ### Capstone Phase 1: Data Engineering Complete
@@ -12,51 +11,66 @@
 - Cleaned, deduplicated, validated
 - Final splits:
   - SFT: 4,000 pairs -> sft_train.jsonl
-  - Distillation prompts (reserved for later, NOT used yet): 1,000 -> distill_prompts.jsonl
+  - Distillation prompts: 1,000 -> distill_prompts.jsonl
   - Test: 200 -> test_set.jsonl
-- DPO preference pairs will be generated in Phase 5
 
-### Capstone Phase 2: SFT Started
-- 0.5B full fine-tune running locally on CPU
-- 3B LoRA training set up in Colab (nimbus-sft-3b-lora-training.ipynb)
-- Colab notebook created and named
+### Capstone Phase 2: SFT Complete
+- 0.5B full fine-tune completed locally
+  - Final loss: 0.5312
+  - Saved to models/nimbus-sft-0.5b-final
+- 3B LoRA trained in Colab (T4)
+  - Merged into full model
+  - Downloaded and extracted to models/nimbus-sft-3b-merged
+
+### Capstone Phase 3: RAG Retrieval Evaluated
+- Built hybrid retrieval + cross-encoder reranking
+- Hand-labeled relevant chunks for 10 questions via review sheet
+- Results (precision@10, recall@10, nDCG@10):
+  - Precision: 0.590
+  - Recall: 0.486
+  - nDCG: 0.660
+
+### Capstone Phase 6: Answer Evaluation Started
+- Evaluated 0.5B SFT model on 200 test questions
+- Mean token overlap: 0.583
+- LLM-as-judge scores mostly 4-5, some lower
+
+### Capstone Phase 4: True Distillation Prepared and Started
+- Script with KL divergence, temperature scaling, alpha blending
+- Quick sanity test passed on 10 examples
+- Added checkpointing and logging
+- Full CPU distillation started and running overnight
+
+### Other Prepared Items
+- DPO scripts (generate-preferences.py, dpo-train.py)
+- Security module files drafted
+- LoRA model card prepared for nimbus-sft-3b-lora
 
 ## Current Training Status
-- 0.5B: running locally (will take several hours)
-- 3B LoRA: notebook ready, training or about to start on Colab T4
+- Full distillation running locally on CPU
+- Logged to distillation/distill-output.log
+- Checkpoint every 500 steps
+- Expected to take many hours
+
+## Key Metrics So Far
+- SFT 0.5B loss: 0.5312
+- Retrieval nDCG@10: 0.660
+- SFT 0.5B answer token overlap: 0.583
 
 ## Next Steps
-- Complete 0.5B local training
-- Complete 3B LoRA training on Colab
-- Download/upload 3B model to HuggingFace
-- Proceed to Phase 3: RAG system
-- Phase 4 will be TRUE distillation using teacher logits + KL divergence (not yet done)
+- Monitor distillation progress
+- Generate DPO preference pairs (after distillation)
+- Run DPO training
+- Implement security module
+- Build FastAPI backend and Streamlit frontend
+- Final evaluation comparing SFT vs distilled vs DPO vs RAG
 
-## Projects (21 completed + capstone in progress)
-1. Email Generator
-2. Support Agent
-3. DocuBot
-4. Nimbus Coffee Fine-Tune (LoRA)
-5. Semantic DocuBot
-6. Hybrid RAG
-7. RAG Evaluation Harness
-8. Nimbus Full Fine-Tune
-9. Reranking RAG
-10. Query Expansion RAG
-11. Own Training Loop
-12. Attention From Scratch
-13. Tiny Transformer
-14. Model Evaluation
-15. FastAPI Model Serving
-16. Synthetic Data Fine-Tuning
-17. ANN From Scratch
-18. Deep Neural Network From Scratch
-19. MNIST Classifier From Scratch
-20. Transformer Training
-21. RLHF Simulation
+## Projects
+- 21 completed prior + capstone in progress
 
 ## Key Milestones
-- Data pipeline built: generate, merge, clean, split
-- 5,333 unique pairs secured
-- Two model training paths initiated
-- True distillation planned for Phase 4, not yet started
+- Data pipeline finished with proper splits
+- Two models trained (0.5B full, 3B LoRA merged)
+- Retrieval and answer evaluation pipelines working
+- True distillation running
+- Security and DPO scripts ready
