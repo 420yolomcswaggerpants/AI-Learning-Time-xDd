@@ -35,6 +35,9 @@
 - Committed and pushed annotated code to GitHub repository.
 - Verified no large model files or secrets were staged.
 
+### Concept & Vocabulary Quizzing
+- Completed daily concept/vocabulary quiz for review and reinforcement.
+
 ## Current Status
 - Capstone codebase is fully annotated and optimized.
 - All scripts have line-by-line comments explaining purpose, parameters, and connections.
