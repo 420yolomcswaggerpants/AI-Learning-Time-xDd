@@ -55,4 +55,3 @@
 - Annotation forced me to understand every line, not just the overall flow—exactly the gap I wanted to close.
 - Fixing real bugs (GPU selection, FP16 gradient scaling) proved that deep code study catches issues that concept-level review misses.
 - The backup folder strategy for large models is essential; local paths must be managed carefully.
-- This was a long but high-value day: I can now explain the entire pipeline from data generation to deployment, line by line.
