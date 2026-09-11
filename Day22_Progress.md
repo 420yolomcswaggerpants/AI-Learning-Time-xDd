@@ -15,7 +15,7 @@
 - Knowledge retention, especially for coding, will take time. This is expected and not a failure.
 
 ### Honest Self-Assessment
-- Mechanics and conceptual understanding are strong for 21 days.
+- Mechanics and conceptual understanding are strong for 22 days.
 - Coding independence is the bottleneck for interviews and for building a passion project without hand-holding.
 - The next phase is about building fluency through small, repeated, from-memory coding practice—not new frameworks or tutorials.
 
