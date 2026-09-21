@@ -1,83 +1,83 @@
-# Day 28 Progress: BrickGenie Goes Live — First Real Play Session Finds Real Bugs
+# Day 28 Progress: First Production Deploy + First Real Play Session
 
 ## Headline
-The product went live, and the first real play session found five genuine bugs that testing had missed.
+First production deploy, then a play session that surfaced five real defects the test suite never saw.
 
 ## What I Did Today
 
 ### Study and Review
 - Continued daily concept and vocabulary study, as always.
 
-### Shipped: Deployment to Production
-- **Deployed to production.** The app is live on Vercel against the managed database, running in the same region as the data.
-- Two deploy failures found and fixed along the way:
+### Shipped: Live in Production
+- Deployed to the hosting platform against the managed production database, co-located in one region.
+- Two deploy failures found and fixed on the way:
   1. An install flag the package manager no longer accepts.
-  2. The game's tuning config was not being packaged into the deployed function, which made every request fail.
+  2. A config file read at runtime that wasn't included in the deployed bundle — which made every request 500.
 
 ### Shipped: Security Audit and Fixes
-- Reviewed every route against a checklist.
-- Found and closed two routes that returned any family's child data to any signed-in parent.
+- Reviewed every endpoint against a checklist.
+- Found and closed two endpoints that returned another account's records to any authenticated user.
 - Also added:
-  - A per-email sign-in hold
-  - Re-authentication scoped to one device instead of all of them
-  - A password change that signs out other devices
-  - A security event log
+  - A per-identifier sign-in throttle
+  - Re-authentication scoped to a single session instead of all of them
+  - Credential changes that end other sessions
+  - An append-only security event log
 
-### Shipped: Per-Request Access Control
-- Access is now decided on **every request** by a single policy function using time, place, device, password age, and a session risk score — instead of being trusted after sign-in.
-- A session that can't be the same person is ended.
-- Anything without a policy is refused, and a route added without one fails the tests.
+### Shipped: Per-Request Authorization
+- Access is now decided on **every request** by a single policy function taking time, network origin, device, credential age and a computed session risk score — replacing a role granted once at sign-in and trusted thereafter.
+- A session that can't plausibly be the same person is ended mid-flight.
+- Anything with no matching policy is refused, and a new route added without one fails CI.
 
-### Shipped: Guide Lockdown
-- The guide previously accepted arbitrary text as a student message. Children only press buttons, so the server now refuses anything else.
-- Added instructions for what to do if a child ever discloses being unsafe.
+### Shipped: Locked Down a Model-Facing Endpoint
+- It previously accepted arbitrary user text. The client only ever sends a fixed set of values, so the server now rejects anything else.
 
-### Shipped: Public Pages
-- Landing page, privacy, terms, accessibility statement, 404 and error pages, favicon, robots and sitemap, plus full browser security headers.
-- Privacy and terms are honest drafts pending legal review.
+### Shipped: Public Site
+- Landing page, privacy policy, terms, accessibility statement, 404 and error pages, icon, robots, sitemap, a health endpoint, and full browser security headers.
+- Policy pages are honest drafts pending legal review.
 
-### Shipped: The Visual Layer (Biggest Change)
-The game was text and progress bars. Now:
-- **Fights are drawn.** A right answer is a sword blow that lands; a wrong one is the enemy striking back. Damage numbers fly off.
-- **The level list became a map:** a winding road of stops with a character who walks it. Tapping a level opens its history — medal, best run, times beaten.
-- **The placement test became the child's first fight**, against an enemy of unknown strength that can't be lost. Every answer is a hit, so it still never tells a child they got something wrong.
-- **Every item has an icon.**
-- **Winning a level now ends in a pop-up with confetti.**
+### Shipped: Interface Overhaul (Largest Change)
+- Replaced static text-and-progress-bar screens with an animated interactive layer.
+- Navigable overview screen in place of a flat list.
+- Per-item iconography.
+- Modal completion state.
+- All CSS animation, no asset pipeline yet; respects reduced-motion preferences and is hidden from screen readers where decorative.
 
-## Bugs Found by Playing, Not by Testing
-This was the day's real lesson. The test suite was green throughout. Playing it found:
-- **Correct answers marked wrong.** A money answer written with a dollar sign was rejected, the child was told they were wrong, and the enemy hit them. Same for numbers with commas, which the game itself displays. The reported "wrong accuracy" was the same bug: the arithmetic was right, the input wasn't.
-- **The guide's "next step" button failed every time** against the real model. Every test used the offline stub, which accepted the malformed request.
-- **The guide stayed on screen across questions**, so a child on question five saw advice about question two.
-- **The check-in looked like it paid twice.** It didn't. A level's reward was displayed under the wrong heading.
-- **A database setting** that was about to silently weaken the connection's security on a future upgrade.
+## Defects Found by Using It, Not by Testing It
+The day's real lesson. The suite was green the entire time. Hands-on use found:
+- **Valid input rejected.** The parser accepted only a bare number, so formatting characters the app itself renders caused a correct submission to be scored as incorrect. A derived metric shown to the user was wrong for the same reason — the arithmetic was right, the input never was.
+- **An external service call failed 100% of the time in production.** The request shape was malformed in a way the offline test double accepted and the live service refuses. Every test used the double.
+- **A UI element persisted across steps** instead of being scoped to the step that raised it, so stale context followed the user forward.
+- **A reward looked like it paid twice.** It didn't — one item was rendered under the wrong heading. The underlying records were correct, confirmed with tests.
+- **A database connection setting** that was about to silently weaken on a future driver upgrade.
+
+Each fix landed with a regression test.
 
 ## Numbers
-- 376 automated tests, all passing
-- Build clean, secret-leak check clean
+- 376 automated tests, all green
+- Build clean; secret-leak scan clean
 - 13 commits
 
 ## Open for Tomorrow
-- Fights on their own page, returning to the map
-- A home screen separate from the map, with navigation menus (design still to be decided)
-- Sound effects
-- Real artwork to replace the placeholder characters
-- Admin tasks: spending cap, uptime monitoring, test a database restore, legal review of the policy pages
+- Move one flow onto its own route with a return path
+- A separate home screen with navigation menus — design not yet decided
+- Audio
+- Final artwork to replace placeholders
+- Ops: spend cap, uptime monitoring, restore drill, legal review of the policy pages
 
 ## Current Status
 - Product is live in production.
-- Security audit complete with fixes shipped.
-- Access control is now per-request, not per-session.
-- Visual layer substantially upgraded.
-- 376 tests passing, build and secret-leak checks clean.
+- Security audit complete, fixes shipped.
+- Authorization is now per-request, not per-session.
+- Interface overhauled with animation and navigation.
+- 376 tests green, build and secret-leak checks clean.
 
 ## Next Steps
 - Continue with the open items listed above.
-- Get more testers. Real play found what the test suite could not.
+- Get more hands-on users. Real use found what the test suite could not.
 
 ## Key Reflections
-- **Every bug today came from using the product, not from the tests.** This is the lesson worth carrying forward.
-- A green test suite does not mean the product works. The offline stub accepted a malformed request that the real model rejected — the test was checking the stub, not the system.
+- **Every defect today came from using the product, not from the tests.** This is the lesson worth carrying forward.
+- A green test suite does not mean the product works. The offline double accepted a malformed request that the live service rejected — the test was validating the double, not the system.
 - An input-validation bug can look like a correctness bug. The arithmetic was fine; the parser wasn't.
-- More testers will be worth more than more test coverage. Testing confirms what you thought to check; play finds what you didn't.
-- Shipping to production surfaces problems that no amount of local testing will, because the deployed environment is not the dev environment.
+- Shipping to production surfaces problems no amount of local testing will, because the deployed environment is not the dev environment.
+- More users will be worth more than more test coverage. Coverage confirms what you thought to check; use finds what you didn't.
