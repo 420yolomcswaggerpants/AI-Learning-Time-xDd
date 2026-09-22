@@ -61,7 +61,7 @@ Each fix landed with a regression test.
 - Move one flow onto its own route with a return path
 - A separate home screen with navigation menus — design not yet decided
 - Audio
-- Final artwork to replace placeholders
+- Artwork to replace placeholders
 - Ops: spend cap, uptime monitoring, restore drill, legal review of the policy pages
 
 ## Current Status
